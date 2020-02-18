@@ -8,8 +8,69 @@
 </head>
 <body>
     <h1>Welcome to giphy world</h1>
-    <script type="text/javascript">
+    <form id="artists-form">
+        <label for="artists-input">Add an Artists</label>
+        <input type="text" id="artists-input"><br> 
+        <input id="add-artists" type="submit" value="Add an Artist!">
+      </form>
+
     
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript">
+
+ 
+  <button data-artists="Frida Kahlo">Frida Kahlo</button>
+  <button data-artists="Jean-Michel Basquiat">Jean-Michel Basquiat</button>
+  <button data-artists="Maya Angelou">Maya Angelou</button>
+  <button data-artists="Langston Huges">Langston Huges</button>
+  <button data-artists="Chaka Khan">Chaka Khan</button>
+  <button data-artisits="Diana Ross">Diana Ross</button>
+  <button data-artists="Gloria Estefan">Gloria Estefan</button>
+  <div id="gifs-appear-here">
+  </div>
+    
+    $("button").on("click", function() {
+      
+      var artists = $(this).attr("data-artists");
+
+      
+      var queryURL ="https://api.giphy.com/v1/gifs/search?q=" +
+        artists + "&api_key=K3gKG96LF6OxMX92lhqltuUcaCVVhLs1";
+
+      $.ajax({
+        url: queryURL,
+        method: "GET"
+      })
+        
+        .then(function(response) {
+          console.log(queryURL);
+
+          console.log(response);
+          
+          var results = response.data;
+
+          for (var i = 0; i < results.length; i++) {
+
+        
+            var artistslDiv = $("<div>");
+
+            
+            var p = $("<p>").text("Rating: " + results[i].rating);
+
+            var artistsImage = $("<img>");
+            
+            artistsImage.attr("src", results[i].images.fixed_height.url);
+
+           
+            artistsDiv.append(p);
+            artistsiv.append(artistsImage);
+
+          
+            $("#gifs-appear-here").prepend(artistsDiv);
+          }
+        });
+    });
+  </script>
     </script>
 </body>
 </html>
